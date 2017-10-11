@@ -4,14 +4,13 @@
 
 **Restrictions**:
 * Be patient - calculations can take up to few minutes.  
-* Up to 100 sequences may be analyzed at the same time.  
+* Up to 50 sequences may be analyzed at the same time using web server. If you need larger query, please use the [AmyloGram](https://CRAN.R-project.org/package=AmyloGram) package for **R**.
 
-**Authors**: [Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/), [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/), [Malgorzata Kotulska](http://www.kotulska-lab.pwr.wroc.pl/).
+**Authors**: [Michal Burdukiewicz](http://www.smorfland.uni.wroc.pl/), [Piotr Sobczyk](http://prac.im.pwr.wroc.pl/~sobczyk/).
 
-**Learn more**:
-* [AmyloGram preprint](https://peerj.com/preprints/2390/).  
-* [AmyloGram R package](https://github.com/michbur/AmyloGram). 
+**Citation**:
+[Burdukiewicz, M., Sobczyk, P., Rödiger, S., Duda-Madej, A., Mackiewicz, P., and Kotulska, M. (2017). Amyloidogenic motifs revealed by n-gram analysis. Scientific Reports 7, 12961.](https://www.nature.com/articles/s41598-017-13210-9)
 
-**Example proteins**:
+**Examplary input**:
 
 

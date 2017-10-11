@@ -1,6 +1,4 @@
 library(shiny)
-library(markdown)
-library(DT)
 library(AmyloGram)
 
 data(AmyloGram_model)
@@ -14,7 +12,7 @@ options(DT.options = list(dom = "Brtip",
 
 my_DT <- function(x)
   datatable(x, escape = FALSE, extensions = 'Buttons',
-            filter = "top", rownames = FALSE)
+            filter = "none", rownames = FALSE)
 
 
 shinyServer(function(input, output) {
@@ -33,7 +31,7 @@ shinyServer(function(input, output) {
     })
 
     if(exists("input_sequences")) {
-      if(length(input_sequences) > 100) {
+      if(length(input_sequences) > 50) {
         #dummy error, just to stop further processing
         stop("Too many sequences.")
       } else {
@@ -50,8 +48,11 @@ shinyServer(function(input, output) {
   })
 
   decision <- reactive({
-    if(!is.null(prediction()))
-      AmyloGram:::make_decision(prediction(), input[["cutoff"]])
+    if(!is.null(prediction())) {
+      res <- AmyloGram:::make_decision(prediction(), input[["cutoff"]])
+      colnames(res) <- c("Input name", "Amyloid probability", "Is amyloid?")
+      res
+    }
   })
 
 
@@ -70,8 +71,9 @@ shinyServer(function(input, output) {
     }
   })
 
-  output$pred_table <- DT::renderDataTable({
-    formatRound(my_DT(decision()), 2, 4)
+  output$pred_table <- renderTable({
+    #formatRound(my_DT(decision()), 2, 4)
+    decision()
   })
 
   output$sensitivity <- renderUI({
@@ -82,6 +84,12 @@ shinyServer(function(input, output) {
     ))
   })
 
+  output$downloadData <- downloadHandler(
+    filename = function() { "AmyloGram_results.csv" },
+    content = function(file) {
+      write.csv(decision(), file)
+    }
+  )
 
   output$dynamic_tabset <- renderUI({
     if(is.null(prediction())) {
@@ -96,16 +104,23 @@ shinyServer(function(input, output) {
 
 
     } else {
-      tabPanel("Short output",
-               DT::dataTableOutput("pred_table"),
-               HTML("Adjust cutoff to obtain required specificity and sensitivity. <br>
-                    The cutoff value affects decisions made by AmyloGram (Amyloid field in the table)."),
+      tabsetPanel(
+        tabPanel("Results",
+               tableOutput("pred_table"),
+               downloadButton('downloadData', 'Download results (.csv)'),
+               h4("Cut-off adjustment"),
+               HTML("Adjust a cut-off (a probability threshold) to obtain required specificity and sensitivity. <br>
+                    The cut-off value affects decisions made by AmyloGram ('Is amyloid?' field in the table)."),
                br(),
                br(),
                fluidRow(
                  column(3, numericInput("cutoff", value = 0.5,
                                         label = "Cutoff", min = 0.01, max = 0.95, step = 0.01)),
                  column(3, htmlOutput("sensitivity"))
+               )
+      ),
+      tabPanel("Help (explained output format)",
+               includeMarkdown("output_format.md")
                )
       )
     }

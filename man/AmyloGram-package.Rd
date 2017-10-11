@@ -2,8 +2,8 @@
 % Please edit documentation in R/AmyloGram-package.R
 \docType{package}
 \name{AmyloGram-package}
-\alias{AmyloGram}
 \alias{AmyloGram-package}
+\alias{AmyloGram}
 \title{Prediction of amyloids}
 \description{
 Amyloids are proteins associated with the number of clinical disorders (e.g.,
@@ -20,14 +20,13 @@ shiny GUI (\code{\link{AmyloGram_gui}}).
 
 The package is enriched with the benchmark data set \code{\link{pep424}}.
 }
+\references{
+Burdukiewicz MJ, Sobczyk P, Roediger S, Duda-Madej A,
+Mackiewicz P, Kotulska M. (2017) \emph{Amyloidogenic motifs revealed
+by n-gram analysis}. Scientific Reports 7
+\url{https://doi.org/10.1038/s41598-017-13210-9}
+}
 \author{
 Maintainer: Michal Burdukiewicz <michalburdukiewicz@gmail.com>
 }
-\references{
-Burdukiewicz MJ, Sobczyk P, Roediger S, Duda-Madej A,
-Mackiewicz P, Kotulska M. (2016) \emph{Prediction of amyloidogenicity
-based on the n-gram analysis}. PeerJ Preprints 4:e2390v1
-\url{https://doi.org/10.7287/peerj.preprints.2390v1}
-}
 \keyword{package}
-
